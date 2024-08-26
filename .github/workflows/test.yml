@@ -1,0 +1,34 @@
+name: ubuntu with gfortran
+run-name: ubuntu with gfortran is testing 🚀
+on: [push, pull_request]
+jobs:
+  test-adv:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: List files in the repository
+        run: |
+          pwd
+          ls ../
+          ls ../../
+          ls ${{ github.workspace }}
+      - name: Install GFortran Linux
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install gfortran -y
+          gfortran --version
+      - name: Install fpm
+        run: |
+            echo $PATH
+            wget https://raw.githubusercontent.com/urbanjost/index/main/bootstrap/fpm.F90
+            mkdir -p /home/runner/.local/bin tmp
+            gfortran fpm.F90 -Itmp -Jtmp -static -o /home/runner/.local/bin/fpm
+            rm -rf tmp
+            ls -l
+      - name: fpm test (debug)
+        run: |
+              fpm test --profile debug --verbose
+      - name: make run
+        run: |
+          make run
