@@ -141,12 +141,12 @@ contains
       t3 = calculate_t(eccentricity, this%phi)
 
       n = (log(m1)-log(m2))/(log(t1)-log(t2))
-      F = m1/(n * sign(1., t1)*abs(t1)**n)
-      r = this%ellipsoid%a * F * (sign(1., t3)*abs(t3)**n)
+      F = m1/(n * sign(1._fp, t1)*abs(t1)**n)
+      r = this%ellipsoid%a * F * (sign(1._fp, t3)*abs(t3)**n)
 
       ! Iterative solution for the latitude
-      r_dash = sign(1., n) * sqrt((i-this%xshift)**2 + (r - (j-this%yshift))**2)
-      t_dash = sign(1., r_dash/(this%ellipsoid%a*F)) * abs(r_dash/(this%ellipsoid%a*F))**(1/n)
+      r_dash = sign(1._fp, n) * sqrt((i-this%xshift)**2 + (r - (j-this%yshift))**2)
+      t_dash = sign(1._fp, r_dash/(this%ellipsoid%a*F)) * abs(r_dash/(this%ellipsoid%a*F))**(1/n)
       phi = PI/2 - 2*ATAN(t_dash)  ! Initial value
       do k = 1, 20
          phi = PI/2 - 2*ATAN(t_dash * ((1-eccentricity*sin(phi))/(1 + eccentricity*sin(phi)))**(eccentricity/2))
@@ -203,8 +203,8 @@ contains
 
       n = (log(m1)-log(m2))/(log(t1)-log(t2))
       F = m1/(n*t1**n)
-      r = this%ellipsoid%a * F * (sign(1., t)*abs(t)**n)
-      r_f = this%ellipsoid%a * F * (sign(1., t_f)*abs(t_f)**n)
+      r = this%ellipsoid%a * F * (sign(1._fp, t)*abs(t)**n)
+      r_f = this%ellipsoid%a * F * (sign(1._fp, t_f)*abs(t_f)**n)
 
       theta = n*(lamda - this%lambda)
 
