@@ -9,6 +9,16 @@ ifeq ($(COMPIFLE),)
    COMPIFLE = intel
 endif
 
+ifeq ($(COMPIFLE), gnu)
+   AR = ar
+   FC = gfortran
+   # 增强警告
+   FFLAGS += -Wall -Werror -Wall -Warray-bounds
+   # 良好的编译习惯
+   FFLAGS += -Wshadow -Wconversion
+   FFLAGS += -Wunreachable-code -Wunused-parameter -Wunused-variable
+endif
+
 ifeq ($(COMPIFLE), intel)
    AR = ar
    FC = ifort

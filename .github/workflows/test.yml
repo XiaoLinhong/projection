@@ -2,7 +2,7 @@ name: ubuntu with gfortran
 run-name: ubuntu with gfortran is testing 🚀
 on: [push, pull_request]
 jobs:
-  test-adv:
+  test-lcc:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -26,4 +26,4 @@ jobs:
               fpm test --profile debug --verbose
       - name: make run
         run: |
-          make run
+          COMPIFLE=gnu make run
